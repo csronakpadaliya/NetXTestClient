@@ -1,0 +1,66 @@
+# Visual Studio
+.vs/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# User-specific files
+*.user
+*.rsuser
+*.suo
+*.vcxproj.user
+*.opendb
+*.VC.db
+
+# Mono auto-generated files
+mono_crash.*
+
+# Backup & patch files
+*.orig
+*.patch
+
+# Other
+*.ide.*
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pyc
+*.dir/
+*.idb
+
+# Visual Studio Code
+.vscode/
+
+# Packages folder (NuGet)
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# macOS specific
+.DS_Store
+
+# Environment-specific files
+.env
+.env.*
+
+# Others
+*.log
+*.tlog
+*.cache

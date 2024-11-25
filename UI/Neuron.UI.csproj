@@ -1,0 +1,186 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Library</OutputType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <StartupObject>
+    </StartupObject>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ESB.snk</AssemblyOriginatorKeyFile>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <VersionInfoPath>..\..\VersionInfo.cs</VersionInfoPath>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="BezierUIElementAttachment.cs" />
+    <Compile Remove="Configuration\AutoCompletionBox.xaml.cs" />
+    <Compile Remove="Configuration\BindingExpressionEditorDialog.cs" />
+    <Compile Remove="Configuration\BindingExpressionEditorDialog.Designer.cs" />
+    <Compile Remove="Configuration\BindingExpressionTypeConverter.cs" />
+    <Compile Remove="Configuration\BindingExpressionUITypeEditor.cs" />
+    <Compile Remove="Configuration\BodyAutoCompletionBox.xaml.cs" />
+    <Compile Remove="Configuration\EntityBindingExpressionEditorDialog.cs" />
+    <Compile Remove="Configuration\EntityBindingExpressionEditorDialog.Designer.cs" />
+    <Compile Remove="Configuration\EntityBindingExpressionUITypeEditor.cs" />
+    <Compile Remove="Configuration\EnvironmentVariableSelector.xaml.cs" />
+    <Compile Remove="Configuration\EnvironmentVariableSelectorComboBoxRestMethods.xaml.cs" />
+    <Compile Remove="Configuration\EnvironmentVariableSelectorRouting.xaml.cs" />
+    <Compile Remove="DPIUtil.cs" />
+    <Compile Remove="EditXmlDocDialog.cs" />
+    <Compile Remove="EditXmlDocDialog.designer.cs" />
+    <Compile Remove="ExceptionDialog.cs" />
+    <Compile Remove="ExceptionDialog.Designer.cs" />
+    <Compile Remove="Layout.cs" />
+    <Compile Remove="PipelineStepOption.cs" />
+    <Compile Remove="PipelineStepsTab.cs" />
+    <Compile Remove="PipelineStepsTab.Designer.cs" />
+    <Compile Remove="SelectCertificate.cs" />
+    <Compile Remove="SelectCertificate.Designer.cs" />
+    <Compile Remove="SelectEndpointDialog.cs" />
+    <Compile Remove="SelectEndpointDialog.Designer.cs" />
+    <Compile Remove="UIElement.cs" />
+    <Compile Remove="UIElementAttachment.cs" />
+    <Compile Remove="UIElementAttachments.cs" />
+    <Compile Remove="UIElementCanvas.cs" />
+    <Compile Remove="UIElementContainer.cs" />
+    <Compile Remove="UIElementEventArgs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Configuration\BindingExpressionEditorDialog.resx" />
+    <EmbeddedResource Remove="Configuration\EntityBindingExpressionEditorDialog.resx" />
+    <EmbeddedResource Remove="EditXmlDocDialog.resx" />
+    <EmbeddedResource Remove="ExceptionDialog.en-US.resx" />
+    <EmbeddedResource Remove="ExceptionDialog.resx" />
+    <EmbeddedResource Remove="PipelineStepsTab.resx" />
+    <EmbeddedResource Remove="SelectCertificate.resx" />
+    <EmbeddedResource Remove="SelectEndpointDialog.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Properties\licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Remove="Configuration\AutoCompletionBox.xaml" />
+    <Page Remove="Configuration\BodyAutoCompletionBox.xaml" />
+    <Page Remove="Configuration\EnvironmentVariableSelector.xaml" />
+    <Page Remove="Configuration\EnvironmentVariableSelectorComboBoxRestMethods.xaml" />
+    <Page Remove="Configuration\EnvironmentVariableSelectorRouting.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Neuron">
+      <HintPath>D:\DS\DesignStudioNetX\NeuronESBNetX\installers\Staging\x64\Debug\win-x64\DEFAULT\Neuron.dll</HintPath>
+    </Reference>
+    <Reference Include="Neuron.NetX">
+      <HintPath>D:\DS\DesignStudioNetX\NeuronESBNetX\installers\Staging\x64\Debug\win-x64\DEFAULT\Neuron.NetX.dll</HintPath>
+    </Reference>
+    <!--Reference Update="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Update="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Update="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference-->
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CustomTabs.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="HexEditor\BitControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="HexEditor\BuiltInContextMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="HexEditor\HexBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="HexEditor\RecentFileHandler.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="HexEditor\UCAbout.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="ListViewEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <None Include="..\ESB.snk">
+      <Link>ESB.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Images\Logo.png" />
+    <Content Include="Resources\ErrorIcon.jpg" />
+    <Content Include="Resources\Exception.png" />
+    <Content Include="Resources\ProgressError.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <AssemblyTitle>Neuron.UI</AssemblyTitle>
+    <Company>Peregrine Connect, LLC</Company>
+    <Product>Neuron ESB</Product>
+    <Copyright>Copyright © 2006-2017 Peregrine Connect, LLC</Copyright>
+    <AssemblyVersion>3.0.0.0</AssemblyVersion>
+    <FileVersion>3.0.0.0</FileVersion>
+    <InformationalVersion>3.0.0.0</InformationalVersion>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+</Project>

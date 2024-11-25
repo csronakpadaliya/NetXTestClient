@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="Neuron.UI.Configuration.EnvironmentVariableSelector"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+           	xmlns:editor="http://schemas.actiprosoftware.com/winfx/xaml/syntaxeditor"  d:DesignHeight="24" d:DesignWidth="224">
+    <Grid Height="24">
+        <editor:SyntaxEditor FontSize="11px" FontFamily="Tahoma" x:Name="editor" IsMultiLine="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Background="White">
+            <editor:EditorDocument x:Name="document" xml:space="preserve"  >             
+            </editor:EditorDocument>
+        </editor:SyntaxEditor>
+    </Grid>
+</UserControl>
+    

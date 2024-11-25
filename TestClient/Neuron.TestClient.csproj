@@ -1,0 +1,133 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+	  <BackbonePath>C:\Ronak\DS\DesignStudioNetX\NeuronESBNetX\installers\Staging\x64\Debug\win-x64\DEFAULT</BackbonePath>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>NeuronTestClient</AssemblyName>
+    <ApplicationIcon>NeuronTestClient.ico</ApplicationIcon>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\ESB.snk</AssemblyOriginatorKeyFile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <VersionInfoPath>..\..\VersionInfo.cs</VersionInfoPath>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Neuron">
+      <HintPath>$(BackbonePath)\Neuron.dll</HintPath>
+    </Reference>
+    <Reference Include="Neuron.Metabase.Admin">
+      <HintPath>$(BackbonePath)\Neuron.Metabase.Admin.dll</HintPath>
+    </Reference>
+    <Reference Include="Neuron.NetX">
+      <HintPath>$(BackbonePath)\Neuron.NetX.dll</HintPath>
+    </Reference>
+    <Reference Include="Neuron.NetX.AdapterBase">
+      <HintPath>$(BackbonePath)\Neuron.NetX.AdapterBase.dll</HintPath>
+    </Reference>
+	<!--Reference Include="Neuron.Pipelines">
+      <HintPath>$(BackbonePath)\Neuron.NetX.Adapters.MSSQLAdapter.dll</HintPath>
+    </Reference-->
+	<Reference Include="Neuron.NetX.Channels.Amqp">
+      <HintPath>$(BackbonePath)\Neuron.NetX.Channels.Amqp.dll</HintPath>
+    </Reference>
+	<Reference Include="Neuron.NetX.Channels.Tcp">
+      <HintPath>$(BackbonePath)\Neuron.NetX.Channels.Tcp.dll</HintPath>
+    </Reference>
+	<Reference Include="Neuron.Pipelines.Activities">
+      <HintPath>$(BackbonePath)\Neuron.Pipelines.Activities.dll</HintPath>
+    </Reference>
+	<Reference Include="Neuron.Pipelines.Activities2">
+      <HintPath>$(BackbonePath)\Neuron.Pipelines.Activities2.dll</HintPath>
+    </Reference>
+	<Reference Include="System.CodeDom">
+      <HintPath>$(BackbonePath)\System.CodeDom.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\ESB.snk">
+      <Link>ESB.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NeuronTestClient.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.16" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="7.2.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens.Saml" Version="6.23.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
+    <PackageReference Include="System.Threading.Channels" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SystemWebAdapters" Version="1.3.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="8.0.0" />
+    <PackageReference Include="System.ServiceModel.Security" Version="6.0.0" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UI\Neuron.UI.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+</Project>
