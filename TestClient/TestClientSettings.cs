@@ -28,7 +28,7 @@ namespace Neuron.TestClient
             InitializeComponent();
 
             runtimeDiscovery = new Neuron.NetX.Discovery.RuntimeDiscovery(null);
-            neuronRuntimes = NeuronEsbInstances();
+            neuronRuntimes = NeuronEsbInstances().GetAwaiter().GetResult();
 
             //RP - not working so commented
 			//neuronRuntimes = runtimeDiscovery.NeuronEsbInstances();
@@ -58,7 +58,7 @@ namespace Neuron.TestClient
 			instanceInfo.InstallPath = instanceInfo.InstallPath ?? string.Empty;
 		}
 
-		public Dictionary<string, InstanceRegistration> NeuronEsbInstances(string machineName = "")
+		public Task<Dictionary<string, InstanceRegistration>> NeuronEsbInstances(string machineName = "")
         {
 			Dictionary<string, InstanceRegistration> _instances = new Dictionary<string, InstanceRegistration>();
 
@@ -75,7 +75,7 @@ namespace Neuron.TestClient
 					}
 				});
 			}
-			return _instances;
+			return Task.FromResult(_instances);
 		}
 
 		public List<InstanceRegistration> GetAllInstances(string machineName = "")

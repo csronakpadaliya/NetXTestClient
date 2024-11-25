@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-	  <BackbonePath>C:\Ronak\DS\DesignStudioNetX\NeuronESBNetX\installers\Staging\x64\Debug\win-x64\DEFAULT</BackbonePath>
+	  <BackbonePath>C:\Program Files\Peregrine\Backbone\RONAK</BackbonePath>
     <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <AssemblyName>NeuronTestClient</AssemblyName>

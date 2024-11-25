@@ -20,7 +20,7 @@ namespace Neuron.TestClient
         [STAThread]
         static void Main(String[] args)
         {
-            System.Diagnostics.Debugger.Launch();
+            //System.Diagnostics.Debugger.Launch();
             XmlConfigurator.Configure();
             AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
             Application.EnableVisualStyles();
