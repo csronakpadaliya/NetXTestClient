@@ -3662,22 +3662,25 @@ namespace Neuron.TestClient
             if (config.AppSettings.Settings["Port"] == null) config.AppSettings.Settings.Add("Port", "50000");
             config.Save();
 
-            // Update the in memory app settings with the one from the file.
-            ConfigurationManager.AppSettings["esbServiceIdentity"] = config.AppSettings.Settings["esbServiceIdentity"].Value;
-            ConfigurationManager.AppSettings["InstanceName"] = config.AppSettings.Settings["InstanceName"].Value;
-            ConfigurationManager.AppSettings["Machine"] = config.AppSettings.Settings["Machine"].Value;
-            ConfigurationManager.AppSettings["Port"] = config.AppSettings.Settings["Port"].Value;
+            var appSettingsConfig = AppSettingsConfig.GetAppSetting();
+            Uri serviceAddress = new Uri(appSettingsConfig.AppSettings.SDKHost.ServiceAddress);
 
-            this.InstanceName = config.AppSettings.Settings["InstanceName"].Value;
-            this.Machine = config.AppSettings.Settings["Machine"].Value;
+            // Update the in memory app settings with the one from the file.
+            ConfigurationManager.AppSettings["esbServiceIdentity"] = appSettingsConfig.AppSettings.SDKHost.ServiceIdentity;
+            ConfigurationManager.AppSettings["InstanceName"] = appSettingsConfig.AppSettings.SDKHost.InstanceName;
+            ConfigurationManager.AppSettings["Machine"] = serviceAddress.Host;
+            ConfigurationManager.AppSettings["Port"] = serviceAddress.Port.ToString();
+
+            this.InstanceName = appSettingsConfig.AppSettings.SDKHost.InstanceName;
+            this.Machine = serviceAddress.Host;
 
             int port = 50000;
-            if (int.TryParse(config.AppSettings.Settings["Port"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out port))
+            if (int.TryParse(serviceAddress.Port.ToString(), NumberStyles.Integer, CultureInfo.InvariantCulture, out port))
                 this.Port = port;
             else
                 this.Port = 50000;
 
-            this.ServiceIdentity = config.AppSettings.Settings["esbServiceIdentity"].Value;
+            this.ServiceIdentity = appSettingsConfig.AppSettings.SDKHost.ServiceIdentity;
 
             if (ConfigurationManager.AppSettings["esbClientCredentials.Username"] != null)
             {

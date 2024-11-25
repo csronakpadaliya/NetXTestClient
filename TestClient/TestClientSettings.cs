@@ -4,6 +4,11 @@ using Neuron.NetX.Discovery;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Microsoft.Win32;
+using System.Diagnostics;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 namespace Neuron.TestClient
 {
     public partial class TestClientSettings : Form
@@ -23,13 +28,117 @@ namespace Neuron.TestClient
             InitializeComponent();
 
             runtimeDiscovery = new Neuron.NetX.Discovery.RuntimeDiscovery(null);
-            neuronRuntimes = runtimeDiscovery.NeuronEsbInstances();
+            neuronRuntimes = NeuronEsbInstances();
+
+            //RP - not working so commented
+			//neuronRuntimes = runtimeDiscovery.NeuronEsbInstances();
 
             this.textBoxConnectServer.Enabled = true;
             this.textBoxPort.Enabled = true;
             this.comboBoxInstance.Enabled = true;          
         }
-        private void EnableConnect()
+
+		private string GetPeregrineConnectDirectoryPath()
+		{
+			string programDataPath = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+			return Path.Combine(programDataPath, "PeregrineConnect", "Backbone");
+		}
+
+		private string GetInstanceDataDirectoryPath()
+		{
+			string directoryPath = GetPeregrineConnectDirectoryPath();
+			return Path.Combine(directoryPath, "Instances");
+		}
+
+		private static void AddInstanceNamesToList(InstanceRegistration instanceInfo)
+		{
+			instanceInfo.Name = instanceInfo.Name ?? string.Empty;
+			instanceInfo.MachineName = instanceInfo.MachineName ?? string.Empty;
+			instanceInfo.ServiceName = instanceInfo.ServiceName ?? string.Empty;
+			instanceInfo.InstallPath = instanceInfo.InstallPath ?? string.Empty;
+		}
+
+		public Dictionary<string, InstanceRegistration> NeuronEsbInstances(string machineName = "")
+        {
+			Dictionary<string, InstanceRegistration> _instances = new Dictionary<string, InstanceRegistration>();
+
+			var lists = GetAllInstances();
+			if (lists != null && lists.Count > 0)
+			{
+				lists.ForEach(instanceInfo =>
+				{
+					AddInstanceNamesToList(instanceInfo);
+
+					if (instanceInfo != null && !_instances.ContainsKey(instanceInfo.Name))
+					{
+						_instances.Add(instanceInfo.Name, instanceInfo);
+					}
+				});
+			}
+			return _instances;
+		}
+
+		public List<InstanceRegistration> GetAllInstances(string machineName = "")
+        {
+            try 
+            { 
+			    string instancesDirectoryPath = GetInstanceDataDirectoryPath();
+
+			    if (!Directory.Exists(instancesDirectoryPath))
+			    {
+				    // Return an empty list if the directory doesn't exist
+				    return new List<InstanceRegistration>();
+			    }
+
+			    List<InstanceRegistration> instances = new List<InstanceRegistration>();
+
+			    // Get all text files in the Instances folder
+			    string[] files = Directory.GetFiles(instancesDirectoryPath, "*.txt");
+
+                foreach (string filePath in files)
+                {
+                    string instanceName = Path.GetFileNameWithoutExtension(filePath);
+
+                    using (FileStream readStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None))
+                    {
+                        using (StreamReader reader = new StreamReader(readStream, Encoding.UTF8))
+                        {
+                            string installPath = reader.ReadToEnd();
+
+                            if (!string.IsNullOrEmpty(installPath))
+                            {
+                                string exePath = Path.Combine(installPath, "ESBServiceNetX.exe");
+
+                                if (File.Exists(exePath))
+                                {
+                                    FileVersionInfo fileInfo = FileVersionInfo.GetVersionInfo(exePath);
+                                    instances.Add(new InstanceRegistration { Name = instanceName, InstallPath = installPath, Version = fileInfo.ProductVersion });
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        File.Delete(filePath);
+                                    }
+                                    catch (Exception deleteException)
+                                    {
+
+                                        // Add _logger
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+			    return instances;
+		    }
+			catch (Exception e)
+			{
+				throw new Exception($"An error occurred while retrieving instances from Instance Data file: {e.Message}", e);
+	        }
+        }
+
+		private void EnableConnect()
         {
             if (this.Port > 1000 && this.Port < 65535 && !string.IsNullOrEmpty(this.Machine) && !string.IsNullOrEmpty(this.InstanceName))
                 this.buttonOk.Enabled = true;
