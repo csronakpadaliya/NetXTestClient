@@ -3665,12 +3665,6 @@ namespace Neuron.TestClient
             var appSettingsConfig = AppSettingsConfig.GetAppSetting();
             Uri serviceAddress = new Uri(appSettingsConfig.AppSettings.SDKHost.ServiceAddress);
 
-            // Update the in memory app settings with the one from the file.
-            ConfigurationManager.AppSettings["esbServiceIdentity"] = appSettingsConfig.AppSettings.SDKHost.ServiceIdentity;
-            ConfigurationManager.AppSettings["InstanceName"] = appSettingsConfig.AppSettings.SDKHost.InstanceName;
-            ConfigurationManager.AppSettings["Machine"] = serviceAddress.Host;
-            ConfigurationManager.AppSettings["Port"] = serviceAddress.Port.ToString();
-
             this.InstanceName = appSettingsConfig.AppSettings.SDKHost.InstanceName;
             this.Machine = serviceAddress.Host;
 
@@ -3682,11 +3676,11 @@ namespace Neuron.TestClient
 
             this.ServiceIdentity = appSettingsConfig.AppSettings.SDKHost.ServiceIdentity;
 
-            if (ConfigurationManager.AppSettings["esbClientCredentials.Username"] != null)
+            if (appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials != null)
             {
-                var userName = ConfigurationManager.AppSettings["esbClientCredentials.Username"];
-                var passWord = ConfigurationManager.AppSettings["esbClientCredentials.Password"];
-                var domain = ConfigurationManager.AppSettings["esbClientCredentials.Domain"];
+                var userName = appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Username;
+                var passWord = appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Password;
+                var domain = appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Domain;
 
                 if (!String.IsNullOrEmpty(userName))
                 {
@@ -3732,10 +3726,6 @@ namespace Neuron.TestClient
                         config.AppSettings.Settings["Port"].Value = settings.Port.ToString();
                         config.Save();
 
-                        ConfigurationManager.AppSettings["esbServiceIdentity"] = settings.ServiceIdentity;
-                        ConfigurationManager.AppSettings["InstanceName"] = settings.InstanceName;
-                        ConfigurationManager.AppSettings["Machine"] = settings.Machine;
-                        ConfigurationManager.AppSettings["Port"] = settings.Port.ToString();
 
                         this.InstanceName = settings.InstanceName;
                         this.Machine = settings.Machine;
@@ -3745,13 +3735,15 @@ namespace Neuron.TestClient
                         this.Password = settings.Password;
                         this.Domain = settings.Domain;
 
-                        if (ConfigurationManager.AppSettings["esbClientCredentials.Username"] != null)
+						var appSettingsConfig = AppSettingsConfig.GetAppSetting();
+                        
+                        if (appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials != null)
                         {
-                            ConfigurationManager.AppSettings["esbClientCredentials.Username"] = this.Username;
+							appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Username = this.Username;
                             config.AppSettings.Settings["esbClientCredentials.Username"].Value = this.Username;
-                            ConfigurationManager.AppSettings["esbClientCredentials.Password"] = this.Password;
+							appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Password = this.Password;
                             config.AppSettings.Settings["esbClientCredentials.Password"].Value = this.Password;
-                            ConfigurationManager.AppSettings["esbClientCredentials.Domain"] = this.Domain;
+							appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Domain = this.Domain;
                             config.AppSettings.Settings["esbClientCredentials.Domain"].Value = this.Domain;
                         }
 
