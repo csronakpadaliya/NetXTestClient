@@ -3653,15 +3653,6 @@ namespace Neuron.TestClient
         }
         private void InitializeConnectionProperties()
         {
-            string configFile = Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", "");
-            System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(configFile);
-
-            if (config.AppSettings.Settings["esbServiceIdentity"] == null) config.AppSettings.Settings.Add("esbServiceIdentity", "");
-            if (config.AppSettings.Settings["InstanceName"] == null) config.AppSettings.Settings.Add("InstanceName", "");
-            if (config.AppSettings.Settings["Machine"] == null) config.AppSettings.Settings.Add("Machine", "");
-            if (config.AppSettings.Settings["Port"] == null) config.AppSettings.Settings.Add("Port", "50000");
-            config.Save();
-
             var appSettingsConfig = AppSettingsConfig.GetAppSetting();
             Uri serviceAddress = new Uri(appSettingsConfig.AppSettings.SDKHost.ServiceAddress);
 
@@ -3697,10 +3688,6 @@ namespace Neuron.TestClient
         {
             try
             {
-                // Get the configuration file.
-                string configFile = Assembly.GetExecutingAssembly().CodeBase.Replace("file:///", "");
-                System.Configuration.Configuration config = ConfigurationManager.OpenExeConfiguration(configFile);
-
                 using (TestClientSettings settings = new TestClientSettings())
                 {
                     InitializeConnectionProperties();
@@ -3720,12 +3707,12 @@ namespace Neuron.TestClient
                     DialogResult result = settings.ShowDialog();
                     if (result == DialogResult.OK)
                     {
-                        config.AppSettings.Settings["esbServiceIdentity"].Value = settings.ServiceIdentity;
-                        config.AppSettings.Settings["InstanceName"].Value = settings.InstanceName;
-                        config.AppSettings.Settings["Machine"].Value = settings.Machine;
-                        config.AppSettings.Settings["Port"].Value = settings.Port.ToString();
-                        config.Save();
+						var appSettingsConfig = AppSettingsConfig.GetAppSetting();
+						Uri serviceAddress = new Uri(appSettingsConfig.AppSettings.SDKHost.ServiceAddress);
 
+                        appSettingsConfig.AppSettings.SDKHost.ServiceIdentity = settings.ServiceIdentity;
+                        appSettingsConfig.AppSettings.SDKHost.InstanceName = settings.InstanceName;
+                        appSettingsConfig.AppSettings.SDKHost.ServiceAddress = $"http://{settings.Machine}:{settings.Port}/";
 
                         this.InstanceName = settings.InstanceName;
                         this.Machine = settings.Machine;
@@ -3735,21 +3722,16 @@ namespace Neuron.TestClient
                         this.Password = settings.Password;
                         this.Domain = settings.Domain;
 
-						var appSettingsConfig = AppSettingsConfig.GetAppSetting();
-                        
                         if (appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials != null)
                         {
 							appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Username = this.Username;
-                            config.AppSettings.Settings["esbClientCredentials.Username"].Value = this.Username;
 							appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Password = this.Password;
-                            config.AppSettings.Settings["esbClientCredentials.Password"].Value = this.Password;
 							appSettingsConfig.AppSettings.SDKHost.WinADAuthCredentials.Domain = this.Domain;
-                            config.AppSettings.Settings["esbClientCredentials.Domain"].Value = this.Domain;
                         }
+						appSettingsConfig.SaveESBSettingsConfiguration();
 
-                        config.Save();
 
-                        if (!String.IsNullOrEmpty(settings.Username))
+						if (!String.IsNullOrEmpty(settings.Username))
                         {
                             _clientCredentials = new NetworkCredential(settings.Username, settings.Password, settings.Domain);
                         }

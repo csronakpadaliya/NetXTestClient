@@ -272,7 +272,9 @@ namespace Neuron.TestClient
                 this.Port = 0;
                 return;
             }
-            this.textBoxPort.Text = "50000";
+            //this.textBoxPort.Text = "50000";
+            //Updated
+            this.textBoxPort.Text = this.Port.ToString();
 
             if (!string.IsNullOrEmpty(comboBoxInstance.Text))
             {
