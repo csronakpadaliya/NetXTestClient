@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
+    <BackbonePath>C:\DesignStudioNetX\NeuronESBNetX\installers\Staging\x64\Debug\win-x64\DEFAULT</BackbonePath>
     <OutputType>Library</OutputType>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -106,10 +107,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Neuron">
-      <HintPath>D:\DS\DesignStudioNetX\NeuronESBNetX\installers\Staging\x64\Debug\win-x64\DEFAULT\Neuron.dll</HintPath>
+      <HintPath>$(BackbonePath)\Neuron.dll</HintPath>
     </Reference>
     <Reference Include="Neuron.NetX">
-      <HintPath>D:\DS\DesignStudioNetX\NeuronESBNetX\installers\Staging\x64\Debug\win-x64\DEFAULT\Neuron.NetX.dll</HintPath>
+      <HintPath>$(BackbonePath)\Neuron.NetX.dll</HintPath>
     </Reference>
     <!--Reference Update="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
