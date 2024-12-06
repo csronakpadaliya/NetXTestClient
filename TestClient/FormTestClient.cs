@@ -34,17 +34,19 @@ namespace Neuron.TestClient
     using System.Globalization;
     using System.ComponentModel;
     using Neuron.NetX.Pipelines;
-    //using ActiproSoftware.Text;
+	using System.Threading.Tasks;
 
-    /// <summary>
-    /// *********************
-    /// *                   *
-    /// *  ESB Test Client  *
-    /// *                   *
-    /// *********************
-    /// </summary>
+	//using ActiproSoftware.Text;
 
-    public partial class FormTestClient : Form
+	/// <summary>
+	/// *********************
+	/// *                   *
+	/// *  ESB Test Client  *
+	/// *                   *
+	/// *********************
+	/// </summary>
+
+	public partial class FormTestClient : Form
     {
         CommandArguments Arguments = null;
         NetworkCredential _clientCredentials = null;
@@ -1186,7 +1188,7 @@ namespace Neuron.TestClient
             }
         }
 
-        private ESBMessage SendMessage(FormData formData)
+		private ESBMessage SendMessage(FormData formData)
         {
             _client.DefaultCustomProperties = _sendCustomProperties.Header.CustomProperties;
 
@@ -1200,20 +1202,38 @@ namespace Neuron.TestClient
             else if ((formData.SendOptions & SendOptions.Reply) == SendOptions.Reply)
             {
                 if (formData.SendString)
-                    message = _client.Reply(_lastReceivedMessage, formData.MessageText);
+                {
+					//Ronak: Old Way
+                    //message = _client.Reply(_lastReceivedMessage, formData.MessageText);
+
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = _client.Reply(_lastReceivedMessage, formData.MessageText); }).GetAwaiter().GetResult();
+				}
                 else if (formData.SendObject)
                 {
                     Object objectToSend = getDynamicObjectToSend();
-                    message = _client.Reply(_lastReceivedMessage, objectToSend);
-                }
+					//Ronak: Old Way
+                    //message = _client.Reply(_lastReceivedMessage, objectToSend);
+
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = _client.Reply(_lastReceivedMessage, objectToSend); }).GetAwaiter().GetResult();
+				}
                 else if (formData.SendBinary)
                 {
-                    message = this._client.Reply(_lastReceivedMessage, this.GetBinaryPayload(formData.MessageText));
-                }
+					//Ronak: Old Way
+					//message = this._client.Reply(_lastReceivedMessage, this.GetBinaryPayload(formData.MessageText));
+
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = this._client.Reply(_lastReceivedMessage, this.GetBinaryPayload(formData.MessageText)); }).GetAwaiter().GetResult();
+				}
                 else
                 {
-                    message = _client.ReplyXml(_lastReceivedMessage, formData.MessageText);
-                }
+					//Ronak: Old Way
+                    //message = _client.ReplyXml(_lastReceivedMessage, formData.MessageText);
+
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = _client.ReplyXml(_lastReceivedMessage, formData.MessageText); }).GetAwaiter().GetResult();
+				}
 
                 AddMessageToMessageHistory(message, "Send");
             }
@@ -1234,10 +1254,14 @@ namespace Neuron.TestClient
                         }
                     };
 
-                    message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
+					//Ronak: Old Way
+					//message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
 
-                }
-                else if (formData.SendString)
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText); }).GetAwaiter().GetResult();
+
+				}
+				else if (formData.SendString)
                 {
                     esbMessage = new ESBMessage(formData.SendTopicText, formData.MessageText)
                     {
@@ -1252,10 +1276,14 @@ namespace Neuron.TestClient
                         }
                     };
 
-                    message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
+					//Ronak: Old Wa
+					//message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
 
-                }
-                else if (formData.SendBinary)
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText); }).GetAwaiter().GetResult();
+
+				}
+				else if (formData.SendBinary)
                 {
                     Byte[] bytes = GetBinaryPayload(formData.MessageText);
                     esbMessage = new ESBMessage(formData.SendTopicText, bytes)
@@ -1270,9 +1298,14 @@ namespace Neuron.TestClient
                                                  BodyType = "binary/bytes"
                                              }
                     };
-                    message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
 
-                    bytes = null;
+					//Ronak: Old Way
+					//message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
+
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText); }).GetAwaiter().GetResult();
+
+					bytes = null;
 
                 }
                 else
@@ -1288,10 +1321,15 @@ namespace Neuron.TestClient
                                                  Action = formData.ActionText
                                              }
                     };
-                    message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
 
-                }
-                AddMessageToMessageHistory(esbMessage, "Send");
+					//Ronak: Old Way
+					//message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText);
+
+					//Ronak: Calling the Party.SendMessage() method using separated thread. Without using the above solution, you need to add .ConfigureAwait(false) in the WcfChannel.Send method at three specific positions.
+					Task.Run(() => { message = _client.SendMessage(esbMessage, formData.SendOptions, null, formData.ActionText); }).GetAwaiter().GetResult();
+
+				}
+				AddMessageToMessageHistory(esbMessage, "Send");
 
             }
 
