@@ -76,6 +76,15 @@
 	<Reference Include="System.CodeDom">
       <HintPath>$(BackbonePath)\System.CodeDom.dll</HintPath>
     </Reference>
+	  <Reference Include="Neuron.NetX.OAuth"> <!-- Temporary included to run call ConnectorPipelineStep from party by attaching the process-->
+		  <HintPath>$(BackbonePath)\Neuron.NetX.OAuth.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Neuron.DesignStudio.UIComponents"> <!-- Temporary included to run call ConnectorPipelineStep from party by attaching the process-->
+		  <HintPath>$(BackbonePath)\Neuron.DesignStudio.UIComponents.dll</HintPath>
+	  </Reference>
+  </ItemGroup>
+	<ItemGroup> <!-- Temporary included to run call ConnectorPipelineStep from party by attaching the process-->
+		<Reference Include="$(BackbonePath)\Adapters\*.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ESB.snk">
