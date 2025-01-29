@@ -35,16 +35,17 @@ namespace Neuron.TestClient
     using System.ComponentModel;
     using Neuron.NetX.Pipelines;
 	using System.Threading.Tasks;
+    using System.Linq;
 
-	//using ActiproSoftware.Text;
+    //using ActiproSoftware.Text;
 
-	/// <summary>
-	/// *********************
-	/// *                   *
-	/// *  ESB Test Client  *
-	/// *                   *
-	/// *********************
-	/// </summary>
+    /// <summary>
+    /// *********************
+    /// *                   *
+    /// *  ESB Test Client  *
+    /// *                   *
+    /// *********************
+    /// </summary>
 
 	public partial class FormTestClient : Form
     {
@@ -3199,7 +3200,7 @@ namespace Neuron.TestClient
                 if (_client != null) zone = _client.Context.Zone.Name;
                 else zone = "Enterprise";
 
-                string[] idList = ESBHelper.GetESBEntityNames<ESBSubscriber>(admin.GetAllSubscribers(zone));
+                string[] idList = ESBHelper.GetESBEntityNames<ESBSubscriber>(admin.GetAllSubscribers(zone).Where(s => !s.IsWorkflowManager).ToList());
                 if (idList != null)
                 {
                     comboBoxSubscriberId.Items.AddRange(idList);
